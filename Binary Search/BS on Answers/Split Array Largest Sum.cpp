@@ -1,0 +1,48 @@
+class Solution {
+public:
+    int splits(const vector<int>arr,long long unit){
+        int n=arr.size();
+        int num_array =1;long long larg=0;
+        for(int i=0;i<n;i++){
+            if(larg +arr[i]<=unit){
+                larg += arr[i];
+            }
+            else{
+               num_array ++;
+               larg =arr[i];
+            }
+        }
+        return num_array;
+    }
+
+    int splitArray(vector<int>& nums, int k) {
+        int n=nums.size();
+        int cnt_split=0;
+        
+        long long low = *max_element(nums.begin(),nums.end());
+        long long high = accumulate(nums.begin(),nums.end(),0LL); 
+//Approach 1 : TIME COMPLEXITY:O(N^2), SPACE COMPLEXITY:O(1). 
+      
+        // for(int maxi=low;maxi<high;maxi++){
+        //     cnt_split = splits(nums,maxi);
+        //     if(cnt_split == k){
+        //         return maxi;
+        //     }
+        // }
+        // return 0;
+      
+//APPROACH 2: TIME COMPLEXITY:O(N*LOGN),SPACE COMPLEXITY:O(1).
+        while(low<high){
+            long long mid = low+(high-low)/2;
+            cnt_split = splits(nums,mid);
+            if(cnt_split<=k ){
+                high=mid;
+            }
+            else{
+                low=mid+1;
+            }
+        }
+        return (int)low;
+    }
+};
+        
